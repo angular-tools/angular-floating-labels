@@ -1,0 +1,22 @@
+{
+  "name": "angular-floating-labels",
+    "authors": [
+    "minutephp <dev@minutephp.com>"
+  ],
+  "description": "Floating labels for AngularJS",
+  "main": "src/js/angular-floating-labels.js",
+  "keywords": [
+    "angularjs",
+    "bootstrap",
+    "tooltips"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.minutephp.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
