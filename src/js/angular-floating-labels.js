@@ -5,31 +5,32 @@
         .directive('floatingLabels', ['$compile', function ($compile) {
             return {
                 restrict: 'A',
-                scope: {},
                 link: function (scope, element, attrs) {
-                    element.find('.form-group').attr('floating-label', '');
+                    element.find('label').each(function (index, ele) {
+                        angular.element(ele).parent('div').attr('floating-label', '');
+                    });
+
                     $compile(element.contents())(scope);
                 }
             };
         }])
-        .directive('floatingLabel', [function () {
+        .directive('floatingLabel', ['$timeout', function ($timeout) {
             return {
                 restrict: 'A',
-                scope: {},
                 link: function (scope, element, attrs) {
                     var self = element;
+                    var input = self.find('input,textarea');
+                    var toggle = function (state) {
+                        self.toggleClass("floating-label-form-group-with-value", !!input.val());
+                    };
+
+                    input.on('input keyup change', toggle)
+                        .focus(function () { self.addClass("floating-label-form-group-with-focus"); })
+                        .blur(function () { self.removeClass("floating-label-form-group-with-focus");});
+
                     self.addClass('floating-label-form-group');
 
-                    self.find('input')
-                        .keyup(".floating-label-form-group", function (e) {
-                            self.toggleClass("floating-label-form-group-with-value", !!$(e.target).val());
-                        })
-                        .focus(".floating-label-form-group", function () {
-                            self.addClass("floating-label-form-group-with-focus");
-                        })
-                        .blur(".floating-label-form-group", function () {
-                            self.removeClass("floating-label-form-group-with-focus");
-                        });
+                    $timeout(toggle, 500);
                 }
             };
         }]);
